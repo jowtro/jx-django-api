@@ -1,0 +1,17 @@
+# A project that creates a FOOD Recipes API
+# It's a Learning project
+
+version: '3'
+
+services:
+ app:
+   build:
+     context: .
+   ports:
+     - "8000:8000"
+   volumes:
+     - ./app:/app
+   command: >
+     sh -c "python manage.py runserver 0.0.0.0:8000"
+# It uses Django Rest Framework
+# warning manage runserver  is for develop mode only
