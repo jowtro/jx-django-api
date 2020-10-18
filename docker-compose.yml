@@ -14,19 +14,11 @@ services:
       - ./app:/app
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
-      - DB_HOST=db
-      - DB_NAME=zappit
-      - DB_USER=postgres
-      - DB_PASS=1234qwe.
       depends_on:
       - db
     env_file:
       - ./.env.dev
   db:
     image: postgres:10-alpine
-    environment: 
-      - POSTGRES_DB=zappit
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123qwe.
     env_file:
       - ./.env.dev
