@@ -5,6 +5,7 @@ set -e
 #read vars from file
 env_file=".env.dev"
 source .env.dev
+# export all vars from file
 export $(cut -d= -f1 $env_file)
 echo "##############################################"
 echo "#     START POSTGRES CONTAINER FIRST!        #"
