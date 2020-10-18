@@ -1,18 +1,15 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 
-if [ "$DATABASE" = "zappit" ]
-then
-    echo "Waiting for postgres..."
-
-    while ! nc -z $SQL_HOST $SQL_PORT; do
-      sleep 0.1
-    done
-    echo "##########################"
-    echo "  PostgreSQL has started  "
-    echo "##########################"
-fi
+echo "########################################"
+echo "#      CHECK IF POSTGRESQL IS UP       #"
+echo "########################################"
+echo "Waiting PostgreSQL"
+python check-pgsql.py
+echo "finished ..."
 
 python manage.py flush --no-input
 python manage.py migrate
 
+# Let the container keep his job
 exec "$@"
