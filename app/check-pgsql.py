@@ -3,10 +3,11 @@ import socket
 import time
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-host = os.environ.get("SQL_HOST").replace('"', "")
+host = str(os.environ.get("SQL_HOST").replace('"', ""))
 port = os.environ.get("SQL_PORT").replace('"', "")
+print(host, port)
 result = 0
-# WAIT POSTGRES TO BE ONLINE
+# WAIT FOR POSTGRES TO BE ONLINE
 while result == 0:
     time.sleep(1.5)
     result = sock.connect_ex((host, int(port)))
