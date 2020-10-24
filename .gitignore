@@ -151,4 +151,4 @@ dmypy.json
 .prof
 
 #env
-.env.dev
+#.env.dev

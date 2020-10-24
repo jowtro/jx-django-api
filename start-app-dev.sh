@@ -1,10 +1,10 @@
 #!/bin/bash
-#if fails at any point break the script
+# if fails at any point break the script
 set -e
  
 #read vars from file
 env_file=".env.dev"
-source .env.dev
+source $env_file
 # export all vars from file
 export $(cut -d= -f1 $env_file)
 echo "##############################################"
@@ -15,4 +15,4 @@ echo "  It's supposed to run with venv activated!   "
 echo "##############################################"
 
 echo "Running python App ..."
-docker-compose up --build -d 
+python manage.py runserver
