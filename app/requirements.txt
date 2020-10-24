@@ -1,5 +1,10 @@
-Django>=2.1.0,<2.2.0
-djangorestframework>=3.8.2,<3.9.0
-psycopg2>=2.7.5,<2.8.0
-psycopg2-binary
-flake8>=3.6.0,<3.7.0
+Django==2.2.16
+djangorestframework==3.8.2
+flake8==3.6.0
+mccabe==0.6.1
+psycopg2==2.8.6
+psycopg2-binary==2.8.6
+pycodestyle==2.4.0
+pyflakes==2.0.0
+pytz==2020.1
+sqlparse==0.4.1
