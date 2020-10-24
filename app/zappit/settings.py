@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'zappit'
+    'rest_framework',
+    'posts'
 ]
 
 MIDDLEWARE = [
@@ -74,9 +75,9 @@ WSGI_APPLICATION = 'zappit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE').replace('"', ''),
-        'NAME': os.environ.get('SQL_DATABASE').replace('"', ''),
-        'USER': os.environ.get('SQL_USER').replace('"', ''),
-        'PASSWORD': os.environ.get('SQL_PASSWORD').replace('"', ''),
+        'NAME': os.environ.get('DATABASE').replace('"', ''),
+        'USER': os.environ.get('POSTGRES_USER').replace('"', ''),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD').replace('"', ''),
         'HOST': os.environ.get('SQL_HOST').replace('"', ''),
         'PORT': os.environ.get('SQL_PORT').replace('"', ''),
         'OPTIONS': {

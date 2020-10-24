@@ -27,7 +27,8 @@ echo "#     END CHECK                        #"
 echo "########################################"
 
 # MIGRATE ANY CHANGES TO THE DATABASE BUT REMOVE IT FIRST.
-python manage.py flush --no-input
+#python manage.py flush --no-input
+python manage.py makemigrations
 python manage.py migrate
 
 # Let the container keep his job
