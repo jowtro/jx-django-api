@@ -1,33 +1,36 @@
 # A generic blueprint project for Django Rest Framework WIP
 
 
- ### docker and docker-compose
+ ### Uses docker and docker-compose
 
 ## You have to setup your environment variables at .env.dev in the project root
 
-# create this file in project's root ".env.dev"
+
+
+
+### Quickstart
+
+# First time building the images and running
 ```console
-DEBUG=True
-SECRET_KEY=GENERATE YOURS HERE https://djecrety.ir/
-DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-SQL_ENGINE=django.db.backends.postgresql_psycopg2
-POSTGRES_DB=zappit
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=123qwe.
-SQL_HOST=db
-SQL_PORT=5432
-DATABASE=zappit
-```
-## tip --env-file will load the file to environment variables
-## to run you need the following command
-```console
-use bellow
-# first time to build the images
 $ docker-compose --env-file .env.dev up --build
-# to start the containers
+```
+
+# docker-compose cheatsheet
+
+### To start the containers
+The arg "--env-file .env.dev " will inject the environment variables into container
+```console
 $ docker-compose --env-file .env.dev up
-OR
-$ ./start-app-dev.sh #TODO
+```
+
+### To stop
+```console
+$ docker-compose down
+```
+
+### To stop and remove volumes  -v, Remove named volumes declared in the `volumes`
+```console
+$ docker-compose down -v
 ```
 
 
@@ -43,7 +46,3 @@ $ ./start-app-dev.sh #TODO
 ![](https://img.shields.io/static/v1?label=Docker&message=19.03.13&color=blue) ![](https://img.shields.io/static/v1?label=Docker-compose&message=1.27.4&color=blue) 
 ![](https://img.shields.io/static/v1?label=Flake8&message=3.8.4&color=green)
 ![](https://img.shields.io/static/v1?label=travis-ci&message=ci&color=red) 
-
-# API Reference
-### todo
-
