@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -55,10 +56,18 @@ class PostListCreate(generics.ListCreateAPIView):
         serializer.save(poster=self.request.user)
 
 
-class PostRetrieveDestroy(generics.RetrieveDestroyAPIView):
+class PostRetrieveDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        post = Post.objects.filter(pk=kwargs['pk'],
+                                   poster=self.request.user)
+        if post.exists():
+            return self.update(request, *args, **kwargs)
+        else:
+            raise ValidationError(r"This isn't your post to update or it doesn't exist.")
 
     def delete(self, request, *args, **kwargs):
         post = Post.objects.filter(pk=kwargs['pk'],
@@ -84,6 +93,7 @@ class VoteCreate(generics.CreateAPIView, mixins.DestroyModelMixin):
         serializer.save(voter=self.request.user,
                         post=Post.objects.get(pk=self.kwargs['pk']))
 
+    # accepts delete request based on URL bond to this class
     def delete(self, request, *args, **kwargs):
         """An user can delete his own vote
 
