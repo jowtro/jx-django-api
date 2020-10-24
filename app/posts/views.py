@@ -1,16 +1,55 @@
-from django.http import request
+from django.http import JsonResponse
+from django.db import IntegrityError
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-from posts.serializers import PostSerializer, VoteSerializer
-from posts.models import Post, Vote
+from rest_framework.authtoken.models import Token
+from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
+from .serializers import PostSerializer, VoteSerializer
+from .models import Post, Vote
 # from django.shortcuts import render
 from rest_framework import generics, permissions, mixins, status
 
 
-class PostList(generics.ListCreateAPIView):
+@csrf_exempt
+def signup(request):
+    if request.method == 'POST':
+        try:
+            data = JSONParser().parse(request)
+            user = User.objects.create_user(data['username'],
+                                            password=data['password'])
+            user.save()
+            token = Token.objects.create(user=user)
+            return JsonResponse({'token': str(token)},
+                                status=status.HTTP_201_CREATED)
+        except IntegrityError:
+            return JsonResponse({'error':
+                                 'That username has already been taken. Please choose a new username'},
+                                status=400)
+
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        user = authenticate(request, username=data['username'], password=data['password'])
+        if user is None:
+            return JsonResponse({'error': 'Could not login. Please check username and password'}, status=400)
+        else:
+            try:
+                token = Token.objects.get(user=user)
+            except Exception:
+                token = Token.objects.create(user=user)
+            return JsonResponse({'token': str(token)},
+                                status=status.HTTP_200_OK)
+
+
+class PostListCreate(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(poster=self.request.user)
