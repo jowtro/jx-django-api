@@ -1,6 +1,37 @@
-# A generic project for Django Rest Framework (will be someday)
-* #### it will work inside a container.
- 
+# A generic blueprint project for Django Rest Framework WIP
+
+
+ ### docker and docker-compose
+
+## You have to setup your environment variables at .env.dev in the project root
+
+# create this file in project's root ".env.dev"
+```console
+DEBUG=True
+SECRET_KEY=GENERATE YOURS HERE https://djecrety.ir/
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+SQL_ENGINE=django.db.backends.postgresql_psycopg2
+POSTGRES_DB=zappit
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=123qwe.
+SQL_HOST=db
+SQL_PORT=5432
+DATABASE=zappit
+```
+## tip --env-file will load the file to environment variables
+## to run you need the following command
+```console
+use bellow
+# first time to build the images
+$ docker-compose --env-file .env.dev up --build
+# to start the containers
+$ docker-compose --env-file .env.dev up
+OR
+$ ./start-app-dev.sh #TODO
+```
+
+
+
 
 
 
@@ -16,4 +47,3 @@
 # API Reference
 ### todo
 
-# How to use?
