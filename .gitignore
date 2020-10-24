@@ -150,5 +150,11 @@ dmypy.json
 # profiling data
 .prof
 
+# vim swap file
+*.swp
+
+.vscode
+.vscode/*
+
 #env
 #.env.dev
