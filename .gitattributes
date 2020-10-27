@@ -1,0 +1,3 @@
+# Set entrypoint end of line to windows compatible
+./app/entrypoint.sh text eol=lf
+*.sh    text eol=lf
