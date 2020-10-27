@@ -17,7 +17,7 @@ hosts_aux = os.environ.get("DJANGO_ALLOWED_HOSTS").replace('"', '')
 ALLOWED_HOSTS = hosts_aux.split(" ")
 
 # Token expire in minutes
-TOKEN_EXPIRE_TIME=2
+TOKEN_EXPIRE_TIME=5
 
 # Application definition
 

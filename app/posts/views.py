@@ -1,18 +1,11 @@
-from django.http import JsonResponse
-from django.db import IntegrityError
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
-from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from .serializers import PostSerializer, VoteSerializer
 from .models import Post, Vote
 # from django.shortcuts import render
 from rest_framework import generics, permissions, mixins, status
-
 
 
 class PostListCreate(generics.ListCreateAPIView):
@@ -28,6 +21,14 @@ class PostRetrieveDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        post = Post.objects.filter(pk=self.kwargs['pk'],
+                                   poster=self.request.user)
+        if post.exists():
+            return post
+        else:
+            raise ValidationError(r"Your post do not exist.")
 
     def patch(self, request, *args, **kwargs):
         post = Post.objects.filter(pk=kwargs['pk'],
