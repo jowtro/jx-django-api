@@ -14,38 +14,6 @@ from .models import Post, Vote
 from rest_framework import generics, permissions, mixins, status
 
 
-@csrf_exempt
-def signup(request):
-    if request.method == 'POST':
-        try:
-            data = JSONParser().parse(request)
-            user = User.objects.create_user(data['username'],
-                                            password=data['password'])
-            user.save()
-            token = Token.objects.create(user=user)
-            return JsonResponse({'token': str(token)},
-                                status=status.HTTP_201_CREATED)
-        except IntegrityError:
-            return JsonResponse({'error':
-                                 'That username has already been taken. Please choose a new username'},
-                                status=400)
-
-
-@csrf_exempt
-def login(request):
-    if request.method == 'POST':
-        data = JSONParser().parse(request)
-        user = authenticate(request, username=data['username'], password=data['password'])
-        if user is None:
-            return JsonResponse({'error': 'Could not login. Please check username and password'}, status=400)
-        else:
-            try:
-                token = Token.objects.get(user=user)
-            except Exception:
-                token = Token.objects.create(user=user)
-            return JsonResponse({'token': str(token)},
-                                status=status.HTTP_200_OK)
-
 
 class PostListCreate(generics.ListCreateAPIView):
     queryset = Post.objects.all()
