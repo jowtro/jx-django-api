@@ -34,7 +34,7 @@ def signup(request):
 @csrf_exempt
 def login(request):
     """DEPRECATED
-    Login without check with token has expired
+    Login without check if token has expired
 
     Args:
         request

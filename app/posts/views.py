@@ -43,7 +43,7 @@ class PostRetrieveDestroy(generics.RetrieveUpdateDestroyAPIView):
         if post.exists():
             return self.destroy(request, *args, **kwargs)
         else:
-            raise ValidationError(r"This isn't your post to delete.")
+            raise ValidationError(r"This isn't your post to delete or it doesn't exist.")
 
 
 class VoteCreate(generics.CreateAPIView, mixins.DestroyModelMixin):
