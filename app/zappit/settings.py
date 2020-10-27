@@ -16,6 +16,8 @@ DEBUG = os.environ.get("DEBUG").replace('"', '')
 hosts_aux = os.environ.get("DJANGO_ALLOWED_HOSTS").replace('"', '')
 ALLOWED_HOSTS = hosts_aux.split(" ")
 
+# Token expire in minutes
+TOKEN_EXPIRE_TIME=5
 
 # Application definition
 
@@ -26,14 +28,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'posts',
     'rest_framework',
     'rest_framework.authtoken',
+    'posts',
 ]
 # Set default authentication to token authentication
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'zappit.auth.token.ExpiringTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
     ],
      'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

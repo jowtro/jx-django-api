@@ -8,10 +8,11 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     url = models.URLField()
     poster = models.ForeignKey(User, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created']
+        ordering = ['-created_at']
 
 
 class Vote(models.Model):
