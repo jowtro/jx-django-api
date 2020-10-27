@@ -33,6 +33,7 @@ python manage.py migrate
 echo "########################################"
 echo "#         INSERT DUMMY DATA            #"
 echo "########################################"
+python manage.py loaddata users_dummies
 python manage.py loaddata posts_dummies
 echo "########################################"
 echo "#         DATA FINISHED DUMMY          #"
