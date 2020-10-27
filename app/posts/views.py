@@ -23,12 +23,12 @@ class PostRetrieveDestroy(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        post = Post.objects.filter(pk=self.kwargs['pk'],
-                                   poster=self.request.user)
+        post = Post.objects.filter(pk=self.kwargs['pk'])
+                                   
         if post.exists():
             return post
         else:
-            raise ValidationError(r"Your post do not exist.")
+            raise ValidationError(r"This post doesn't exist")
 
     def patch(self, request, *args, **kwargs):
         post = Post.objects.filter(pk=kwargs['pk'],
