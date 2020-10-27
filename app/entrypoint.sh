@@ -30,6 +30,12 @@ echo "########################################"
 #python manage.py flush --no-input
 python manage.py makemigrations
 python manage.py migrate
-
+echo "########################################"
+echo "#         INSERT DUMMY DATA            #"
+echo "########################################"
+python manage.py loaddata posts_dummies
+echo "########################################"
+echo "#         DATA FINISHED DUMMY          #"
+echo "########################################"
 # Let the container keep his job
 exec "$@"
